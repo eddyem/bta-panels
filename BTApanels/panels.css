@@ -1,0 +1,90 @@
+body{
+	margin: 2px;
+	background: #DDD;
+	font-style: normal;
+	font-weight: normal;
+	font-size: 24px;
+	}
+	
+h1, h2{
+	text-align: center; font-weight: bold;
+	margin: -10px; padding: 0px; font-size: 250%;
+	}
+	
+h2{ font-size: 140%; color: #FF0;}
+
+h3{
+	text-align: left; font-weight: bold; font-style: italic;
+	margin: 0px; padding: 0px; font-size: 110%;
+	}
+
+div{
+	text-align: center; padding: 2px; margin: 2px;
+	}
+.inline{margin: -5px;}
+
+.header{
+	width: 100%; height: 100px; text-align: center; border: 2px solid;
+	}
+
+.bold {font-weight: bold;}
+
+td,th {padding-bottom: 4px; padding-top: 4px; text-align: center; vertical-align: top;}
+th {background: #000; color: #FFF;}
+
+.border {
+	border: 2px solid; padding-left: 5px; padding-right: 5px; vertical-align: middle;
+	}
+
+.top {vertical-align: top;}
+.mid {text-align: center; vertical-align: middle;}
+.right{text-align: right;}
+.topright, .topleft {
+	position: absolute; top: 20px;
+	font-weight: normal; font-size: 70%;
+	}
+.topright {right: 20px;}
+.topleft  {left:  20px;}
+
+.label{margin-top: 20px;}
+
+.hand {color: #0F0; cursor: pointer; font-weight: bold;}
+
+.Green {background: #0F0;}
+.Blue  {background: #00F;}
+.Cyan  {background: #0FF;}
+.Red   {background: #F00;}
+.Yellow{background: #FF0;}
+.White {background: #FFF;}
+.Black {background: #000; color: #FFF;}
+
+.C	{text-align: center;}
+
+.Cb {text-align: center; padding: 5px;
+	border: solid 1px black;}
+.b	{border: solid 1px black;}
+
+.La	{float: left;}
+
+.s	{width: 70px;}
+
+.small{width: 25px; height: 20px;}
+
+.Light {background: #DDE;}
+
+.chooser{
+	display: none; border-radius: 5px; position: absolute;
+	left: 20px; top: 20px; border: solid 1px black; background-color: #DDD;
+}
+
+.helper	{position: fixed; left: 3px; top: 3px; color: green; cursor: pointer;}
+#helptip{
+	position: fixed; background-color: #BFE; border-radius: 5px;
+	color: black; max-width: 400px; max-height: 500px; padding: 5px;
+}
+.redtxt	{color: red; margin-top: 20px;}
+
+.full{width: 100%;}
+
+.pre{white-space:pre; text-indent: 0px;}
+

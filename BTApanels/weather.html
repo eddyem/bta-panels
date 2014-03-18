@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>Meteo data</title>
+<meta http-equiv="content-type" content="text/html; charset=koi8-r">
+<meta http-equiv="refresh" content="70">
+
+<!--meta http-equiv="expires" content="Thu, 01 Jan 1970 00:00:01 GMT">
+<meta http-equiv="cache-control" content="no-store, no-cache, must-revalidate, post-check=0, pre-check=0">
+<meta http-equiv="pragma" content="no-cache"-->
+
+<link href="panels.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="panels.js" language="javascript"></script>
+</head>
+<body onload="init('meteo');">
+<table width="100%">
+<tr>
+<th class="border" colspan="3" id="header"><h1>Meteo data</h1><br>
+	<div class="topright hand" id="stop"></div>
+	<div class="topleft"><div class="hand" id="menu"></div><div id="reqmsgs"></div></div>
+	<table width="100%">
+	<tr>
+		<td><h2>Date: <span id="Date"></span></h2></td>
+		<td><h2>Moscow time: <span id="Mtime"></span></h2></td>
+		<td><h2>Sidereal time: <span id="Stime"></span></h2></td>
+	</tr>
+	</table>
+</th></tr>
+<tr>
+	<td style="max-width: 800px;" width="45%" class="border">
+		<div id="BigIMGlabel">Click on image to change videoserver</div>
+		<img id="BigIMG" width="95%"><br>
+		<img id="GuideIMG" width="49%">
+		<img id="CatIMG" width="49%">
+	</td>
+	<td style="max-width: 50%;" class="border top">
+		<img width="100%" id="clouds">
+		<div class="inline">Temperature: external <span id="ValTout"></span><sup>o</sup>C,
+			in-dome <span id="ValTind"></span><sup>o</sup>C,
+			mirror <span id="ValTmir"></span><sup>o</sup>C
+		</div>
+		<img width="100%" id="temp">
+		<img width="100%" id="wind">
+		<img width="100%" id="seeing">
+	</td>
+	<td class="border" width="150px">
+		<div class="label">Sky</div>
+		<div id="weather" class="Yellow border">unknown</div>
+		<div class="label">Temp. difference</div>
+		<div id="tempdiff" class="border"></div>
+		<div class="label">Wind speed</div>
+		<div id="windspeed" class="border"></div>
+		<div class="label">Last gust time</div>
+		<div id="Gust" class="border"></div>	
+		<div class="label">Wind direction</div>
+		<img width="100%" id="winddir">
+		<div class="label">Seeing</div>
+		<div id="seeingval" class="border">unknown</div>
+	</td>
+</tr>
+</table>
+</body>
+</html>
