@@ -1,13 +1,12 @@
-var Stimeout, Itimeout; // таймеры для обновления времени и изображения 
+var Stimeout, Itimeout; // таймеры для обновления времени и изображения
 var Rtimeout, Etimeout; // таймер запросов, таймаут сообщ. об ошибке
 const  Stimeout_rate = 500, Itimeout_rate = 30000, Rtimeout_rate = 5000;
 var ImageSrc = new Array(2); // адрес изображения
-var Isrc = 0; // номер адреса изображения
 var oldDate = 0; // дата/время на момент последнего обновления (в мс)
 var MskTime, SidTime; // московское и звездное время
 var PanelType;
 
-const paramsURL = [ "http://tb.sao.ru/cgi-bin/eddy/bta_print.cgi", 
+const paramsURL = ["http://tb.sao.ru/cgi-bin/eddy/bta_print.cgi",
 				"http://ishtar.sao.ru/cgi-bin/bta_print.cgi"];
 const MeteoURL = [ "http://tb.sao.ru/cgi-bin/eddy/tempmon",
 				"http://ishtar.sao.ru/cgi-bin/tempmon"];
@@ -18,6 +17,83 @@ const GuideURL = "http://n2.sao.ru/webcam/webcam_n2_0.jpeg";
 const USNOURL = "http://n2.sao.ru/ua2/gd15_ua2_jpeg.cgi?size=384&coord=cur";
 const myURL = "http://ishtar.sao.ru/BTApanels/";
 
+
+const TEST = true; // set to false in release
+function tlog__(msg){console.log(msg);}
+var tlog;
+if(TEST) tlog = tlog__;
+else tlog = function(msg){};
+
+var Storage = null;
+
+localCookies = function(){
+function get(nm){
+	tlog("get " + nm);
+	var name = nm + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i < ca.length; i++){
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1);
+		if (c.indexOf(name) != -1)
+			return c.substring(name.length,c.length);
+	}
+	return "";
+}
+function set(nm, val){
+	tlog("set "+ nm + " to " + val);
+	document.cookie = nm + "=" + val + ";";
+	tlog(document.cookie);
+}
+return{
+    getItem : get,
+    setItem : set
+    };
+}();
+
+
+function checkStorage(){
+	if(Storage) return;
+	var ret = localCookies;
+	try{
+		ret = localStorage;
+	} catch(e){
+		console.log(e);
+	}
+	Storage = ret;
+}
+
+/*
+ * Load object nm from local storage
+ * if it's absent set it to defval or return null if devfal undefined
+ */
+function LoadObject(nm, defval){
+	checkStorage();
+	var val = null;
+	try{
+		var X = Storage.getItem(nm);
+		tlog(X);
+		val = JSON.parse(X);
+	}catch(e){
+		console.log(e);
+	}
+	if(val == null && typeof(defval) != "undefined"){
+		tlog("Can't load object, try to use defaults");
+		val = defval;
+	}else
+		tlog("load object " + nm + " with value " + val);
+	return val;
+}
+/*
+ * Save object obj in local storage as nm
+ */
+function SaveObject(obj, nm){
+	checkStorage();
+	tlog("save " + obj);
+	Storage.setItem(nm, JSON.stringify(obj));
+}
+
+var Isrc = LoadObject("ImageSrc", 0); // номер адреса изображения
+
 function $(Id){
 	return document.getElementById(Id);
 }
@@ -27,8 +103,9 @@ function _(Name){
 }
 
 function chBigImg(){
-	Isrc = (Isrc == 0) ? 1:0; 
+	Isrc = (Isrc == 0) ? 1:0;
 	$('BigIMG').src = ImageSrc[Isrc] + "?" + Math.random();
+	SaveObject(Isrc, "ImageSrc");
 }
 
 function init(panelName){
@@ -38,7 +115,7 @@ function init(panelName){
 	make_menu(panelName);
 	PanelType = panelName;
 	if(panelName == "BTA")
-		ImageSrc[0] = ImageSrc[1] = "http://tb.sao.ru/webcam/webcam_sky_1_maxi.jpeg";				
+		ImageSrc[0] = ImageSrc[1] = "http://tb.sao.ru/webcam/webcam_sky_1_maxi.jpeg";
 	else if(panelName == "meteo"){
 		ImageSrc[1] = "http://zserv.sao.ru/webcam/webcam_zserv_2_maxi.jpeg";
 		ImageSrc[0] = "http://zserv.sao.ru/webcam/webcam_zserv_3_maxi.jpeg";
@@ -272,7 +349,7 @@ function parceReqStr(request){
 		switch(Tel_Mode){
 			case "Pointing" : colr = "Blue"; break;
 			case "Tracking": colr = "Green"; break;
-			case "Seeking" : 
+			case "Seeking" :
 			case "Correction" : colr = "Cyan"; break;
 			case "Off" : colr = "Red"; break;
 			case "Waiting" : colr = "White"; break;
