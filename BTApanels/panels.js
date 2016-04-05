@@ -15,10 +15,8 @@ const windURL = "http://ztcs.sao.ru/meteo/wind.png";
 const BTAURL = "http://tb.sao.ru/tcs/ctrl/bta_img.cgi?size=150&mode=";
 const GuideURL = "http://n2.sao.ru/webcam/webcam_n2_0.jpeg";
 const USNOURL = "http://n2.sao.ru/ua2/gd15_ua2_jpeg.cgi?size=384&coord=cur";
-const myURL = "http://ishtar.sao.ru/BTApanels/";
 
-
-const TEST = true; // set to false in release
+const TEST = false; // set to false in release
 function tlog__(msg){console.log(msg);}
 var tlog;
 if(TEST) tlog = tlog__;
@@ -145,7 +143,7 @@ function make_menu(panelName){
 	for(i = 0; i < l; i++){
 		if(names[i] == panelName) continue;
 		var item = document.createElement("div");
-		item.innerHTML = "<a href=\""+myURL+URLS[i]+"\">"+itemstext[i]+"</a>";
+		item.innerHTML = "<a href=\""+URLS[i]+"\">"+itemstext[i]+"</a>";
 		chooser.appendChild(item);
 	}
 }

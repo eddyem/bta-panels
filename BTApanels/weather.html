@@ -11,8 +11,10 @@
 
 <link href="panels.css" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="panels.js" language="javascript"></script>
+<script type="text/javascript" src="noaa.js"></script>
+<script type="text/javascript" src="SAO.js"></script>
 </head>
-<body onload="init('meteo');">
+<body onload="init('meteo'); globCalc.init();">
 <table width="100%">
 <tr>
 <th class="border" colspan="3" id="header"><h1>Meteo data</h1><br>
@@ -35,27 +37,31 @@
 	</td>
 	<td style="max-width: 50%;" class="border top">
 		<img width="100%" id="clouds">
-		<div class="inline">Temperature: external <span id="ValTout"></span><sup>o</sup>C,
-			in-dome <span id="ValTind"></span><sup>o</sup>C,
-			mirror <span id="ValTmir"></span><sup>o</sup>C
+		<div class="inline">Temperature: external <span id="ValTout"></span>&deg;C,
+			in-dome <span id="ValTind"></span>&deg;C,
+			mirror <span id="ValTmir"></span>&deg;C
 		</div>
 		<img width="100%" id="temp">
 		<img width="100%" id="wind">
 		<img width="100%" id="seeing">
 	</td>
 	<td class="border" width="150px">
-		<div class="label">Sky</div>
-		<div id="weather" class="Yellow border">unknown</div>
+		<div class="label">Sun</div>
+		<div class="border" id="Sun" style="font-size: 12pt;"><span id="SunH">?</span> (<span id="daytime"></span>)</div>
+		<div class="label">Moon</div>
+		<div class="border" style="font-size: 12pt;">A=<span id="MoonA">?</span>, Z=<span id="MoonZ">?</span></div>
 		<div class="label">Temp. difference</div>
 		<div id="tempdiff" class="border"></div>
 		<div class="label">Wind speed</div>
 		<div id="windspeed" class="border"></div>
 		<div class="label">Last gust time</div>
-		<div id="Gust" class="border"></div>	
+		<div id="Gust" class="border"></div>
 		<div class="label">Wind direction</div>
 		<img width="100%" id="winddir">
 		<div class="label">Seeing</div>
 		<div id="seeingval" class="border">unknown</div>
+		<div class="label">Sky</div>
+		<div id="weather" class="Yellow border">unknown</div>
 	</td>
 </tr>
 </table>
