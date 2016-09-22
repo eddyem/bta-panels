@@ -33,7 +33,6 @@ globCalc = function(){
 		chval('MoonA', Math.round(MoonPos.azimuth) + "&deg;");
 		chval('MoonZ', Math.round(MoonPos.zenith) + "&deg;");
 		// astronomical twilight
-		alt *= _2deg;
 		if(alt < -18) chvalcls('daytime', "night", "Black");
 		else if(alt < -12) chvalcls('daytime', "astronomical twilight", "Gray");
 		else if(alt < -6) chvalcls('daytime', "nautical twilight", "LGray");

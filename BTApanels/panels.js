@@ -51,11 +51,12 @@ return{
 
 function checkStorage(){
 	if(Storage) return;
-	var ret = localCookies;
+	var ret;
 	try{
 		ret = localStorage;
 	} catch(e){
-		console.log(e);
+		console.log("Can't get localstorage! " + e);
+		ret = localCookies;
 	}
 	Storage = ret;
 }
@@ -69,10 +70,10 @@ function LoadObject(nm, defval){
 	var val = null;
 	try{
 		var X = Storage.getItem(nm);
-		tlog(X);
+		tlog("Storage:" + X);
 		val = JSON.parse(X);
 	}catch(e){
-		console.log(e);
+		console.log("Nothing in storage! " +e);
 	}
 	if(val == null && typeof(defval) != "undefined"){
 		tlog("Can't load object, try to use defaults");
@@ -361,7 +362,7 @@ function showGustTime(){
 	var Gust = $('Gust');
 	var Gtime = Number(Blast15);
 	var pref = ">=15 m/s";
-	if (Gtime > 1440){
+	if (Gtime > 60){
 		var G10 = Number(Blast10);
 		if(G10 < 1440){
 			pref = ">=10 m/s";
@@ -374,7 +375,7 @@ function showGustTime(){
 	var now = new Date();
 	var h = Math.floor(Gtime/60);
 	now.setTime(MskTime.getTime() - Gtime * 60000);
-	var str = (Gtime < 1) ? _2(Gtime)+"s" : ((Gtime < 60)? _2(Gtime)+"m" :
+	var str = (Gtime < 1) ? _2(Gtime*60)+"s" : ((Gtime < 60)? _2(Gtime)+"m" :
 			_2(h)+"h "+_2(Gtime%h)+"m");
 	Gust.innerHTML = pref+"<br>"+_2(now.getHours())+":"+_2(now.getMinutes())+"<br>("+str+" ago)";
 	if(Gtime >= 60) Gust.className = "border";
