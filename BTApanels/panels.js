@@ -1,7 +1,7 @@
 var Stimeout, Itimeout; // таймеры для обновления времени и изображения
 var Rtimeout, Etimeout; // таймер запросов, таймаут сообщ. об ошибке
 const  Stimeout_rate = 500, Itimeout_rate = 30000, Rtimeout_rate = 5000;
-var ImageSrc = new Array(2); // адрес изображения
+var ImageSrc = []; // адрес изображения
 var oldDate = 0; // дата/время на момент последнего обновления (в мс)
 var MskTime, SidTime; // московское и звездное время
 var PanelType;
@@ -91,7 +91,7 @@ function SaveObject(obj, nm){
 	Storage.setItem(nm, JSON.stringify(obj));
 }
 
-var Isrc = LoadObject("ImageSrc", 0); // номер адреса изображения
+var Isrc = 0; // number of image source
 
 function $(Id){
 	return document.getElementById(Id);
@@ -102,7 +102,8 @@ function _(Name){
 }
 
 function chBigImg(){
-	Isrc = (Isrc == 0) ? 1:0;
+    var l = ImageSrc.length;
+    if(++Isrc >= l) Isrc = 0;
 	$('BigIMG').src = ImageSrc[Isrc] + "?" + Math.random();
 	SaveObject(Isrc, "ImageSrc");
 }
@@ -114,14 +115,15 @@ function init(panelName){
 	make_menu(panelName);
 	PanelType = panelName;
 	if(panelName == "BTA")
-		ImageSrc[0] = ImageSrc[1] = "http://tb.sao.ru/webcam/webcam_sky_1_maxi.jpeg";
+		ImageSrc.push("http://tb.sao.ru/webcam/webcam_sky_1_maxi.jpeg");
 	else if(panelName == "meteo"){
-		ImageSrc[1] = "http://zserv.sao.ru/webcam/webcam_zserv_2_maxi.jpeg";
-		ImageSrc[0] = "http://zserv.sao.ru/webcam/webcam_zserv_3_maxi.jpeg";
-		//ImageSrc[1] = "http://zsky.sao.ru/mjpg/4/video.mjpg";
+        ImageSrc.push("http://zserv.sao.ru/webcam/webcam_zserv_3_maxi.jpeg");
+		ImageSrc.push("http://zserv.sao.ru/webcam/webcam_zserv_2_maxi.jpeg");
+		ImageSrc.push("http://tb.sao.ru/~eddy/allsky.jpg");
+		$('BigIMG').onclick = chBigImg;
+		$('BigIMGlabel').onclick = chBigImg;
+		Isrc = LoadObject("ImageSrc", 0); // номер адреса изображения
 	}
-	$('BigIMG').onclick = chBigImg;
-	$('BigIMGlabel').onclick = chBigImg;
 	startTimers();
 }
 
